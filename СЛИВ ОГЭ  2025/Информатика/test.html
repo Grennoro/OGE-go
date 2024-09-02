@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Генератор заданий</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .task, .solution, .answer { display: none; }
+        .result { color: green; }
+        .error { color: red; }
+        .option-button { margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Генератор заданий</h1>
+    <button onclick="generateTask()">Сгенерировать задание</button>
+    <div class="task">
+        <p id="taskDescription"></p>
+        <div id="options"></div>
+        <input type="text" id="userAnswer" placeholder="Введите ваш ответ" disabled>
+        <button onclick="checkAnswer()">Проверить ответ</button>
+        <button onclick="showAnswer()">Показать ответ</button>
+        <button onclick="showSolution()">Показать решение</button>
+        <p class="result" id="result"></p>
+        <p class="answer" id="correctAnswer"></p>
+        <p class="solution" id="solution"></p>
+    </div>
+    <script>
+        const options = [
+            { letter: 'А', value: '.com' },
+            { letter: 'Б', value: 'ftp' },
+            { letter: 'В', value: 'http' },
+            { letter: 'Г', value: 'example' },
+            { letter: 'Д', value: '://' },
+            { letter: 'Е', value: '/' },
+            { letter: 'Ж', value: '.org' },
+            { letter: 'З', value: '.html' },
+            { letter: 'И', value: '.net' },
+            { letter: 'К', value: 'site' },
+            { letter: 'Л', value: 'docs' },
+            { letter: 'М', value: '.gif' },
+            { letter: 'Н', value: 'file' },
+            { letter: 'О', value: 'https' },
+            { letter: 'П', value: 'jour' },
+            { letter: 'Р', value: 'images' },
+            { letter: 'С', value: 'index' },
+            { letter: 'Т', value: '.jpg' },
+            { letter: 'У', value: '.docx' },
+            { letter: 'Ф', value: 'server' },
+            { letter: 'Х', value: 'folder' }
+        ];
+
+        let selectedOptions = [];
+
+        function generateTask() {
+            document.getElementById('result').innerText = '';
+            document.getElementById('correctAnswer').innerText = '';
+            document.getElementById('solution').innerText = '';
+            document.getElementById('result').className = '';
+            document.getElementById('correctAnswer').style.display = 'none';
+            document.getElementById('solution').style.display = 'none';
+            document.querySelector('.task').style.display = 'block';
+            document.getElementById('userAnswer').disabled = false;
+
+            const task = generateRandomTask();
+            document.getElementById('taskDescription').innerText = task.description;
+            displayOptions();
+            document.getElementById('userAnswer').dataset.answer = task.answer.toUpperCase();
+            document.getElementById('userAnswer').dataset.solution = task.solution;
+        }
+
+        function generateRandomTask() {
+            const protocols = ['Б', 'В', 'О']; // 'ftp', 'http', 'https'
+            const domains = ['Г', 'К', 'П', 'Ф']; // 'example', 'site', 'jour', 'server'
+            const tlds = ['А', 'Ж', 'И']; // '.com', '.org', '.net'
+            const folders = ['Е']; // 'docs', 'images', 'folder'
+            const files = ['Н', 'С']; // 'file', 'index'
+            const extensions = ['З', 'М', 'Т', 'У']; // '.html', '.gif', '.jpg', '.docx'
+            const slashs = ['Д'];
+            
+
+            const protocol = protocols[Math.floor(Math.random() * protocols.length)];
+            const domain = domains[Math.floor(Math.random() * domains.length)];
+            const tld = tlds[Math.floor(Math.random() * tlds.length)];
+            const folder = folders[Math.floor(Math.random() * folders.length)];
+            const file = files[Math.floor(Math.random() * files.length)];
+            const extension = extensions[Math.floor(Math.random() * extensions.length)];
+
+            selectedOptions = [
+                { letter: protocol, value: options.find(opt => opt.letter === protocol).value },
+                { letter: domain, value: options.find(opt => opt.letter === domain).value },
+                { letter: tld, value: options.find(opt => opt.letter === tld).value },
+                { letter: folder, value: options.find(opt => opt.letter === folder).value },
+                { letter: file, value: options.find(opt => opt.letter === file).value },
+                { letter: extension, value: options.find(opt => opt.letter === extension).value },
+                { letter: 'Д', value: '://' }, 
+                
+                
+            ];
+            selectedOptions.sort((a, b) => a.letter.localeCompare(b.letter));
+
+            const description = `Файл ${options.find(opt => opt.letter === file).value}${options.find(opt => opt.letter === extension).value} находится на сервере ${options.find(opt => opt.letter === domain).value}${options.find(opt => opt.letter === tld).value} и доступен по протоколу ${options.find(opt => opt.letter === protocol).value}. Запишите последовательность букв, кодирующую адрес указанного файла в сети Интернет.`;
+
+            const answer = `${protocol}Д${domain}${tld}${folder}${file}${extension}`;
+
+            const solution = `Адрес в сети Интернет формируется следующим образом: сначала протокол (${options.find(opt => opt.letter === protocol).value}), затем '://', затем сервер (${options.find(opt => opt.letter === domain).value}${options.find(opt => opt.letter === tld).value}), затем папка (${options.find(opt => opt.letter === folder).value}), и, наконец, имя файла (${options.find(opt => opt.letter === file).value}${options.find(opt => opt.letter === extension).value}). Следовательно, правильная последовательность: ${answer}.`;
+
+            return { description, answer, solution };
+        }
+
+        function displayOptions() {
+            const optionsContainer = document.getElementById('options');
+            optionsContainer.innerHTML = '';
+
+            selectedOptions.forEach(option => {
+                const button = document.createElement('button');
+                button.innerText = `${option.letter}) ${option.value}`;
+                button.className = 'option-button';
+                button.onclick = () => appendOption(option.letter);
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        function appendOption(value) {
+            const userAnswer = document.getElementById('userAnswer');
+            userAnswer.value += value;
+        }
+
+        function checkAnswer() {
+            const userAnswer = document.getElementById('userAnswer').value.trim().toUpperCase();
+            const correctAnswer = document.getElementById('userAnswer').dataset.answer;
+            if (userAnswer === correctAnswer) {
+                document.getElementById('result').innerText = 'Правильно!';
+                document.getElementById('result').className = 'result';
+            } else {
+                document.getElementById('result').innerText = 'Неправильно. Попробуйте снова.';
+                document.getElementById('result').className = 'error';
+            }
+        }
+
+        function showAnswer() {
+            document.getElementById('correctAnswer').innerText = 'Правильная последовательность: ' + document.getElementById('userAnswer').dataset.answer;
+            document.getElementById('correctAnswer').style.display = 'block';
+        }
+
+        function showSolution() {
+            document.getElementById('solution').innerText = 'Решение: ' + document.getElementById('userAnswer').dataset.solution;
+            document.getElementById('solution').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

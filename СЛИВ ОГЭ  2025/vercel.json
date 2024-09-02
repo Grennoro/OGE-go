@@ -1,0 +1,9 @@
+json
+{
+  "routes": [
+    {
+      "src": "/",
+      "dest": "/OGE_main.html.html"
+    }
+  ]
+}

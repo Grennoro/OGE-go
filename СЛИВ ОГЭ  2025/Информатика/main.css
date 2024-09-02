@@ -1,0 +1,185 @@
+@import url('https://fonts.googleapis.com/css2?family=Baskervville+SC&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=New+Amsterdam&display=swap');
+*{
+	margin: 0;
+}
+body{
+	background-color: black;
+}
+.top{
+	background-color: black;
+	width: 100%;
+	height: 90px;
+	position: fixed;
+	z-index: 100;
+}
+.back{
+	position: absolute;
+		bottom: -18px;
+		right: 900px;
+	position: relative;
+		left: 20%;
+		top: -120px;
+}
+.matem{
+	position: absolute;
+		bottom: -18px;
+		right: 900px;
+	position: relative;
+		left: 20%;
+		top: -120px;
+}
+.history{
+	position: absolute;
+		bottom: -18px;
+		right: 900px;
+	position: relative;
+		left: 20%;
+		top: -120px;
+}
+.silk{
+	font-family: "New Amsterdam";
+	color: white;
+	font-size: 20px;
+	margin: 50px;
+	z-index: 101;
+	right: 20%;
+	text-decoration: nones;
+}
+.name{
+	font-family: "New Amsterdam";
+	font-size: 45px;
+	color: white;
+	margin: 50px;
+	text-shadow: 2px 2px 5px white;
+	z-index: 101;
+	position: relative;
+	bottom: 30px;
+}
+.header{
+	display: inline-block;
+	height: 110vh;
+	width: 100%;
+	background-color:whitesmoke;
+	background-image:  linear-gradient(90deg, rgba(255,216,107,1) 0%, rgba(242,128,255,1) 100%);
+}
+h1{
+	color: black;
+	font-size: 50px;
+	text-align: center;
+	font-family: "Baskervville SC";
+	position: relative;
+	top: 15%;
+	text-shadow: 0px 0px 10px darkblue;
+}
+.choose{
+	font-family: "Baskervville SC";
+	text-decoration: none;
+	margin: 50px;
+	font-size: 25px;
+	border: 2px solid black;
+	border-radius: 10px;
+	padding: 8px;
+	color: cyan;
+	background-color: #17181b;
+	position: absolute;
+	top: 50%;
+	left: 38%;
+}
+.choose:hover{
+	size: 20px;
+	padding: 16px;
+	transition: 1s;
+	box-shadow: 0 0 0 0 pink;
+	transform: scale(1);
+	animation: pulse 2s 1;
+}
+@keyframes pulse {
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 cyan;
+	}
+
+	65% {
+		transform: scale(1);
+		box-shadow: 0 0 0 17px darkcyan;
+	}
+
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 cyan;
+	}
+}
+img{
+	margin: 100px;
+	rotate: -45deg;
+}
+.middle{
+	display: inline-block;
+	height: 105vh;
+	width: 100%;
+	background-color:whitesmoke;
+	box-shadow: -20px 0px 50px black;
+}
+.end{
+	display: inline-block;
+	height: 15vh;
+	width: 100%;
+	background-color: black;
+	border-collapse:collapse ;
+}
+.middle-words{
+	color: black;
+	size: 25px;
+	font-size: 50px;
+	font-family: "Baskervville SC";
+	text-decoration: blink ;
+	text-shadow: 2px 2px 5px black;
+	margin-top: 50px;
+}
+.end-words{
+	color: white;
+	size: 5px;
+	text-align: center;
+	font-family: "Baskervville SC";
+}
+.ex{
+	display: inline-block;
+	text-decoration: none;
+	width: 110px;
+	background-color: black;
+	color: white;
+	border: 4px solid black;
+	border-radius: 10px;
+	font-size: 20px;
+	padding: 5px;
+	margin: 15px;
+	font-family: "Baskerviville SC";
+}
+.ex:hover{
+	transform: scale(1.2);
+	transition: 1s;
+	box-shadow: 0px 0px 50px darkcyan;
+}
+table{
+	margin: auto;
+	width: 670px;
+	padding: 70px;
+	table-layout: fixed;
+}
+tr{
+	display: inline-block;
+	padding: 25px;
+	margin-right:110px ;
+}
+.hell{
+	background-color: black;
+	color: white;
+	border-radius: 30px;
+	box-shadow: 0 5px 10px gray;
+	padding: 20px;
+	position: fixed;
+	bottom: 50px;
+	left: 90%;
+	z-index: 100;
+}

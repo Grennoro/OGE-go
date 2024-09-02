@@ -1,0 +1,196 @@
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Задание на нахождение наибольшего числа</title>
+
+
+
+
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Wittgenstein:ital,wght@0,400..900;1,400..900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Playwrite+PE:wght@100..400&display=swap');
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+            background-image: linear-gradient(90deg, rgba(25,133,183,1) 0%, rgba(98,107,126,1) 44%, rgba(255,53,0,1) 100%);
+            text-align: center;
+        }
+        .task {
+            margin: 60px;
+            margin: auto;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+
+        }
+        .main{
+            max-width: 700px;
+            width: 100%;
+            height: 800px;
+            background-color: whitesmoke;
+            color: black;
+            margin: 40px;
+            padding: 10px;
+            border-radius: 15px; 
+        }
+        h1{
+            color: black;
+            margin:25px ;
+            text-align: center;
+        }
+        .text{
+            margin: 20px;
+            text-align: center;
+            font-size: 25px;
+        }
+        .gen{
+            text-align: center;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: black;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-bottom: 50px;
+        }
+        button:hover {
+            background-color: whitesmoke;
+            color: black;
+            transition: 2s;
+            box-shadow: 0px 0px 10px black;
+        }
+        input[type="number"] {
+            padding: 5px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid black;
+            margin: 20px;
+        }
+        .hell{
+            background-color: black;
+            color: white;
+            border-radius: 30px;
+            box-shadow: 0 5px 10px gray;
+            padding: 20px;
+            position: fixed;
+            bottom: 50px;
+            left: 90%;
+            z-index: 100;
+            text-align: center;
+        }
+        .ans{
+            margin: 30px;
+        }
+    </style>
+
+
+
+
+
+
+</head>
+<body>
+    <div class="main">
+        <a href="main.html" class="hell">Вернуться<br>обратно</a>
+        <h1>Найдите наибольшее число</h1>
+        <p class="text">Среди приведенных ниже трех чисел, записанных в различных системах счисления, найдите максимальное и запишите его в ответе в десятичной системе счисления. В ответе запишите только число, основание системы счисления указывать не нужно.</p>
+        <button id="generateTask" class="gen">Сгенерировать задание</button>
+        <div id="task" class="task">
+            <pre id="numbers"></pre>
+        </div>
+
+        <input type="number" class="ans" id="userAnswer" placeholder="Введите ваш ответ" />
+        <button id="checkAnswer">Проверить ответ</button>
+        <button id="showAnswer">Показать ответ</button>
+        <button id="showSolution">Показать решение</button>
+
+        <div id="result"></div>
+    </div>
+
+
+
+
+
+
+
+
+    <script>
+        let maxDecimal;
+        let correctIndex;
+        
+        let decimalValues = [];
+
+        function generateTask() {
+            const number1 = Math.floor(Math.random() * 501); // Случайное число для двоичной системы
+            const number2 = Math.floor(Math.random() * 501); // Случайное число для восьмеричной системы
+            const number3 = Math.floor(Math.random() * 501); // Случайное число для шестнадцатеричной системы
+
+            const binaryNumber = number1.toString(2);   // Двоичная система
+            const octalNumber = number2.toString(8);    // Восьмеричная система
+            const hexNumber = number3.toString(16);      // Шестнадцатеричная система
+            
+            decimalValues = [
+                parseInt(binaryNumber, 2),
+                parseInt(octalNumber, 8),
+                parseInt(hexNumber, 16)
+            ];
+
+            document.getElementById("numbers").textContent = `1. ${binaryNumber}  (двойная система счисления)\n2. ${octalNumber}   (восьмеричная система счисления)\n3. ${hexNumber}     (шестнадцатеричная система счисления)`;
+
+            // Находим максимальное число среди трех
+            maxDecimal = Math.max(...decimalValues);
+            correctIndex = decimalValues.indexOf(maxDecimal) + 1;
+            document.getElementById("result").textContent = ""; // Очищаем предыдущий результат
+        }
+
+        function checkAnswer() {
+            const userAnswer = parseInt(document.getElementById("userAnswer").value);
+            const resultDiv = document.getElementById("result");
+
+            if (userAnswer === maxDecimal) {
+                resultDiv.textContent = "Верно! Поздравляем!";
+            } else {
+                resultDiv.textContent = `Неверно. Правильный ответ: ${maxDecimal}`;
+            }
+        }
+
+        function showAnswer() {
+            const resultDiv = document.getElementById("result");
+            resultDiv.textContent = `Правильный ответ: ${maxDecimal}, он находится под номером ${correctIndex}.`;
+        }
+
+        function showSolution() {
+            const resultDiv = document.getElementById("result");
+            const solution = `
+                Для нахождения наибольшего числа мы преобразовали числа из различных систем счисления в десятичную:
+                - Двоичное: ${decimalValues[0]} (из ${document.getElementById("numbers").textContent.split('\n')[0].match(/\d+/)[0]})
+                - Восьмеричное: ${decimalValues[1]} (из ${document.getElementById("numbers").textContent.split('\n')[1].match(/\d+/)[0]})
+                - Шестнадцатеричное: ${decimalValues[2]} (из ${document.getElementById("numbers").textContent.split('\n')[2].match(/\d+/)[0]})
+
+                Наибольшее число — это ${maxDecimal}.`;
+
+            resultDiv.innerHTML = solution.replaceAll('\n', '<br/>');
+        }
+
+        document.getElementById("generateTask").addEventListener("click", generateTask);
+        document.getElementById("checkAnswer").addEventListener("click", checkAnswer);
+        document.getElementById("showAnswer").addEventListener("click", showAnswer);
+        document.getElementById("showSolution").addEventListener("click", showSolution);
+    </script>
+
+</body>
+</html>

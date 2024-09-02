@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Address Task</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #task {
+            margin-bottom: 20px;
+        }
+        .btn {
+            margin: 5px;
+        }
+        #user-answer {
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Задание с IP-адресом</h1>
+    <div id="task">Нажмите "Сгенерировать задание", чтобы начать.</div>
+    <button class="btn" onclick="generateTask()">Сгенерировать задание</button>
+    <button class="btn" onclick="showAnswer()">Показать ответ</button>
+    <div>
+        <input type="text" id="user-answer" placeholder="Введите ваш ответ здесь" />
+        <button class="btn" onclick="checkAnswer()">Проверить ответ</button>
+    </div>
+    <div id="answer"></div>
+    <div id="result"></div>
+
+    <script>
+        let partsDict = {};
+        let correctOrder = [];
+
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function generateIpAddressParts() {
+            // Генерируем значения от 1 до 255, чтобы исключить 0
+            let octet1 = getRandomInt(1, 255);
+            let octet2 = getRandomInt(1, 255);
+            let octet3 = getRandomInt(1, 255);
+            let octet4 = getRandomInt(1, 255);
+
+            let part1 = `${octet1}.${octet2}`;
+            let part2 = `${octet3}`;
+            let part3 = `. ${octet4}`;
+            let part4 = `${octet4}.${octet1}`;
+
+            let parts = [part1, part2, part3, part4];
+            parts.sort(() => Math.random() - 0.5);
+
+            let labels = ['А', 'Б', 'В', 'Г'];
+            partsDict = {};
+            for (let i = 0; i < labels.length; i++) {
+                partsDict[labels[i]] = parts[i];
+            }
+        }
+
+        function formatTask(partsDict) {
+            let taskText = "На месте преступления были обнаружены четыре обрывка бумаги. Следствие установило, что на них записаны фрагменты одного IP-адреса. Криминалисты обозначили эти фрагменты буквами А, Б, В и Г:<br><br>";
+            for (let label in partsDict) {
+                taskText += `${label} - ${partsDict[label]}<br>`;
+            }
+            taskText += "<br>Восстановите IP-адрес. В ответе укажите последовательность букв, обозначающих фрагменты, в порядке, соответствующем IP-адресу.";
+            return taskText;
+        }
+
+        function findCorrectOrder(partsDict) {
+            let order = [];
+
+            // Установим первую часть (без точки)
+            for (let label in partsDict) {
+                if (!partsDict[label].includes('.')) {
+                    order.push(label);
+                    break;
+                }
+            }
+
+            // Установим остальные части на основе правил
+            for (let label in partsDict) {
+                let part = partsDict[label];
+
+                if (part.includes('.') && !part.endsWith('.') && !part.startsWith('.')) {
+                    order.push(label); // Эта часть вторая
+                }
+            }
+
+            for (let label in partsDict) {
+                let part = partsDict[label];
+                if (part.endsWith('.')) {
+                    order.push(label); // Эта часть третья
+                }
+            }
+
+            for (let label in partsDict) {
+                if (!order.includes(label)) {
+                    order.push(label); // Оставшаяся часть четвертая
+                }
+            }
+
+            return order;
+        }
+
+        function reconstructIp(partsDict, correctOrder) {
+            let ip = correctOrder.map(label => partsDict[label]).join('');
+            ip = ip.replace('..', '.'); // Удалить лишние точки
+            return ip;
+        }
+
+        function validateIp(ipAddress) {
+            let parts = ipAddress.split('.');
+            if (parts.length !== 4) return false;
+            return parts.every(part => !isNaN(part) && part >= 0 && part <= 255);
+        }
+
+        function generateValidTask() {
+            let order;
+            do {
+                generateIpAddressParts();
+                order = findCorrectOrder(partsDict);
+            } while (!validateIp(reconstructIp(partsDict, order)));
+            correctOrder = order;
+        }
+
+        function generateTask() {
+            generateValidTask();
+            document.getElementById('task').innerHTML = formatTask(partsDict);
+            document.getElementById('answer').innerHTML = "";
+            document.getElementById('result').innerHTML = "";
+            document.getElementById('user-answer').value = "";
+        }
+
+        function showAnswer() {
+            if (correctOrder.length > 0) {
+                document.getElementById('answer').innerHTML = "Правильный ответ: " + correctOrder.join("");
+            } else {
+                document.getElementById('answer').innerHTML = "Сначала сгенерируйте задание.";
+            }
+        }
+
+        function checkAnswer() {
+            let userAnswer = document.getElementById('user-answer').value.toUpperCase().replace(/\s+/g, '');
+            if (userAnswer === correctOrder.join("")) {
+                document.getElementById('result').innerHTML = "Правильно!";
+            } else {
+                document.getElementById('result').innerHTML = "Неправильно. Попробуйте еще раз.";
+            }
+        }
+    </script>
+</body>
+</html>
+

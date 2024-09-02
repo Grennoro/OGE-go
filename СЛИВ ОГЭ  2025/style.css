@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+*{
+	margin: 0;
+	padding: 0;
+}
+.head{
+	width: 100%;
+	height: 130vh;
+	background-image: linear-gradient(90deg, rgba(187,115,236,1) 0%, rgba(244,106,106,1) 50%, rgba(230,179,107,1) 100%);
+}
+.top{
+	background-color: black;
+	width: 100%;
+	height: 90px;
+	position: fixed;
+	z-index: 100;
+}
+.name{
+	font-family: "New Amsterdam";
+	font-size: 45px;
+	color: white;
+	margin: 50px;
+	text-shadow: 2px 2px 5px white;
+	z-index: 101;
+	position: relative;
+	bottom: 30px;
+	text-align: center;
+}
+h1{
+	text-align: center;
+	font-size: 55px;
+	font-family: "Playfair Display", serif;
+	text-shadow: 2px 2px 4px black;
+	position: relative;
+	top: 10%;
+}
+.vibor{
+	font-family: "Playfair Display", serif;
+	font-size: 19px;
+	text-decoration: none;
+	border: 2px solid black;
+	border-radius: 5px;
+	padding: 8px;
+	position: absolute;
+	top: 50%;
+	left: 40%;
+}
+.vibor:hover{
+	size: 20px;
+	transition: 1s;
+	box-shadow: 0 0 0 0 pink;
+	transform: scale(1);
+	animation: pulse 2s 1;
+}
+@keyframes pulse {
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 pink;
+		opacity: 0.3;
+	}
+
+	65% {
+		transform: scale(1.1);
+		box-shadow: 0 0 0 17px purple;
+		opacity: 0.6;
+	}
+
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 pink;
+		opacity: 0.3;
+	}
+}
+.end{
+	display: inline-block;
+	height: 15vh;
+	width: 100%;
+	background-color: black;
+	border-collapse:collapse ;
+}
+.end-words{
+	color: white;
+	size: 5px;
+	text-align: center;
+	font-family: "Playfair Display";
+}
+.middle{
+	width: 100%;
+	height: 130vh;
+	background-image: whitesmoke;
+	border-top: 10px solid black;
+}
+.object{
+	text-align: center;
+	font-size: 51px;
+	font-family: "Playfair Display", serif;
+	text-shadow: 2px 2px 4px black;
+	position: relative;
+	top: 10%;
+	margin-bottom: 70px;
+}
+.first_mem{
+	margin: 100px;
+	rotate: -45deg;
+}
+.second_mem{
+	margin: 100px;
+	rotate: 45deg;
+	position: relative;
+	left: 38%;
+}
+table{
+	margin-top: 80px;
+	margin: auto;
+	width: 75%;
+	padding: 100px;
+}
+.choose{
+	display: inline-block;
+	text-decoration: none;
+	background-color: black;
+	color: white;
+	border: 4px solid black;
+	border-radius: 10px;
+	font-size: 20px;
+	padding: 5px;
+	margin: 15px;
+	font-family: "Baskerviville SC";
+}
+.choose:hover{
+	transform: scale(1.2);
+	transition: 1s;
+	box-shadow: 0px 0px 50px gold;
+}
